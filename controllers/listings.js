@@ -5,7 +5,14 @@ const router = express.Router();
 const Listing = require('../models/listing');
 
 router.get('/', async(req, res) => {
-  res.render('listings/index.ejs');
+  try{
+    const populatedListings = await Listing.find({}).populate('owner');
+  console.log('Populated Listings: ', populatedListings);
+  res.render('listings/index.ejs', {listings: populatedListings});
+  } catch(err) {
+    console.log(err);
+    res.redirect('/');
+  }
 });
 
 router.get('/new', async(req, res) => {
