@@ -25,4 +25,14 @@ router.post('/', async(req, res) => {
   res.redirect('/listings');
 })
 
+router.get('/:listingId', async(req, res) => {
+  try{
+    const populatedListings = await Listing.findById(req.params.listingId).populate('owner');
+    res.render('listings/show.ejs', {listing: populatedListings})
+  } catch(err){
+    console.log(err);
+    res.redirect('/');
+  }
+});
+
 module.exports = router;
