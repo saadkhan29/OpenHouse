@@ -10,6 +10,24 @@
 
     <h1>A listing in <%= listing.city %></h1>
 
+  <h2>Favorites</h2>
+
+  <p>Favorited by <%= listing.favoritedByUsers.length %> people.</p>
+
+  <% if (userHasFavorited) { %>
+  <p>You've favorited this listing!</p>
+  <% } else { %>
+  <p>You haven't favorited this listing.</p>
+
+  <form
+    action="/listings/<%= listing._id %>/favorited-by/<%= user._id %>"
+    method="POST"
+  >
+    <button type="submit">Favorite it!</button>
+  </form>
+
+  <% } %>
+
     <h2>Details</h2>
     <p>House Size: <%= listing.size %> sq ft</p>
     <p>Price: $<%= listing.price %></p>
